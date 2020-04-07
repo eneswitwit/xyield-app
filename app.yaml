@@ -1,0 +1,46 @@
+## runtime
+runtime: php
+env: flex
+runtime_config:
+  document_root: public #folder where index.php is
+
+## env variables for prod
+env_variables:
+  GOOGLE_VISION_PROJECT_ID: xyield
+  APP_KEY: base64:bzKDg2nZCBGWtzvj2DlQs9TQ4rqW2IjhwRIGY94RlK4=
+  APP_DEBUG: true
+  APP_ENV: production
+  ## storage
+  APP_STORAGE: /tmp
+  VIEW_COMPILED_PATH: /tmp
+  CACHE_DRIVER: database
+  SESSION_DRIVER: database
+  QUEUE_DRIVER: database
+  ## set these environment variables according to your CloudSQL configuration.
+  DB_HOST: localhost
+  DB_DATABASE: production
+  DB_USERNAME: root
+  DB_PASSWORD: 390495616Ew.
+  DB_SOCKET: "/cloudsql/xyield:europe-west1:xyield-webapp-mysql"
+  ## set these environment variables for mail
+  MAIL_DRIVER: smtp
+  MAIL_HOST: smtp.mailtrap.io
+  MAIL_PORT: 2525
+  MAIL_USERNAME: 3db4888ce92042
+  MAIL_PASSWORD: 52710673f0c8d3
+  ## logging channel
+  LOG_CHANNEL: stackdriver
+
+  STRIPE_KEY: pk_test_XK9U8ZNGYSxsKy0m3ZukTNeT00I1bRTI3v
+  STRIPE_SECRET: sk_test_yeukZC5NojksnzKZwKltOK6Y0086B4z327
+
+  ## OAUTH KEYS
+  GOOGLE_CLIENT_ID: 1026263288607-ns566f8u5eliqp7tor9t253jm5ah2c4u.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: nYLOjH2ju-JvDudJ25nhMNKR
+  FACEBOOK_CLIENT_ID: 573436303293154
+  FACEBOOK_CLIENT_SECRET: 04f2351582ec88a7c6557e1906259e09
+
+beta_settings:
+  # for Cloud SQL, set this value to the Cloud SQL connection name,
+  # e.g. "project:region:cloudsql-instance"
+  cloud_sql_instances: xyield:europe-west1:xyield-webapp-mysql
