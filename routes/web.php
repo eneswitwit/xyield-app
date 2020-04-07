@@ -23,6 +23,10 @@ Route::get('logout', function () {
 Route::group(['middleware' => ['auth', 'verified', 'subscriber']], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/home', 'DashboardController@index')->name('home');
+    Route::get('/listings', 'ListingsController@index')->name('listings');
+
+
+
     // Dashboard Setting Routes
     Route::redirect('settings', 'settings/profile')->name('settings');
     Route::get('settings/profile', 'DashboardController@profile')->name('profile');
