@@ -24,34 +24,40 @@ class ListingsController extends Controller
 
         // Loop through all expose links and extract data
         foreach ($expose_links as $expose_link) {
-            $crawler = Goutte::request('GET', 'https://www.immobilienscout24.de' . $expose_link);
+            $crawler = Goutte::request('GET', 'https://www.immobilienscout24.de/expose/93354736');
 
-            // extract expose step by step
+            // extract expose step by step (only information not included in script)
 
             // expose title
-            $title = $crawler->filter('#expose-title')->first()->text();
+            $expose_title = $crawler->filter('#expose-title')->first()->text();
+            $expose_address_block = $crawler->filter('.address-block')->first()->text();
+            // realtor courtage
+            $broker_commission_percentage = (float) filter_var(str_replace(',', '.', $crawler->filter('.is24qa-provision')->first()->text()), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $broker_commission_value = 0;
+            $land_transfer_percentage = 0;
+            $land_transfer_value = 0;
+            // Filter all expose links
+            $node_text = array();
+            $crawler->filter('#is24-content > .grid-item > .is24-ex-details > span')->each(function ($node) use (&$node_text, &$broker_commission_percentage, &$broker_commission_value, &$land_transfer_percentage, &$land_transfer_value) {
+                $node_text[] = $node->text();
+                if (strpos(strval($node->attr("class")), "broker-commission-value") !== false) {
+                    dd('yes');
+                    $broker_commission_value = (float) $node->text();
+                    dd($broker_commission_value);
+                }
+            });
+            dd($node_text);
+
+
+            //$broker_commission_value = (float) filter_var(str_replace(',', '.', $crawler->filter('.finance-cost-offers-widget > .cost-container')->first()->text()), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            // land transfer (grunderwerbsteuer)
+            $land_transfer_percentage = (float) filter_var(str_replace(',', '.', $crawler->filter('.land-transfer-percentage')->first()->text()), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $land_transfer_value = (float) filter_var(str_replace(',', '.', $crawler->filter('.land-transfer-value')->first()->text()), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
             // adress (from script)
             $script = json_decode($crawler->filter('s24-ad-targeting')->first()->text());
+            dd($script);
 
-            // price 
-            $price = $script->obj_purchasePrice;
-
-            // location
-            $state = $script->obj_regio1;
-            $municipality_district = $script->obj_regio2;
-            $municipality = $script->obj_regio3;
-            // check if city district is in address block to specify location further since not all data is in script, basically
-            // regio4 is missing
-            // @TODO: Filter out regio4
-            $address_block = $crawler->filter('.address-block')->first()->text();
-            $zipCode = $script->obj_zipCode;
-            $street = $script->obj_street;
-            $houseNumber = $script->obj_houseNumber;
-
-            // service charge
-            $serviceCharge = $script->obj_serviceCharge;
-            dd($serviceCharge);
 
 
 
