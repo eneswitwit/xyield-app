@@ -14,7 +14,9 @@
         "laravel/framework": "^6.0",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
-        "nothingworks/blade-svg": "^0.3.4"
+        "mashape/unirest-php": "^3.0",
+        "nothingworks/blade-svg": "^0.3.4",
+        "weidner/goutte": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
