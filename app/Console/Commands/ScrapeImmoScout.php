@@ -45,7 +45,7 @@ class ScrapeImmoScout extends Command
         $pageNumber = 1;
         $expose_links = array();
         $scraping = true;
-        $baseUrl = 'https://www.immobilienscout24.de/Suche/de/' . $this->argument('immo_type') . '?pagenumber=';
+        $baseUrl = 'https://www.immobilienscout24.de/Suche/de/' . $this->argument('immo_type') . '?sorting=2&pagenumber=';
 
         while ($scraping) {
 

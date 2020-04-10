@@ -63,3 +63,6 @@ Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
 Route::get('p/{slug}', 'PageController@page')->name('page');
+
+// Scheduler for Google App Engine
+Route::get('scheduler', 'ArtisanController@handle')->middleware('app-engine-cron');
